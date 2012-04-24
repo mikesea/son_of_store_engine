@@ -4,9 +4,16 @@ class OrdersController < ApplicationController
   before_filter :belongs_to_current_user?, only: [:show]
 
   def new
-    @credit_card = current_user.credit_cards.last ||
+    if current_user.credit_cards.empty?
       redirect_to new_credit_card_path and return
-    @shipping_detail = current_user.shipping_details.last || redirect_to new_shipping_detail_path and return
+    end
+
+    if current_user.shipping_details.empty?
+      redirect_to new_shipping_detail_path and return
+    end
+
+    @credit_card = current_user.credit_cards.last || 
+    @shipping_detail = current_user.shipping_details.last
     @order = Order.new
   end
 
