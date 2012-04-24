@@ -8,9 +8,7 @@ class RetirementsController < ApplicationController
   end
 
   def update
-    activate = Retirement.new(params[:product_id])
-    activate.activate
-
+    Retirement.new(params[:product_id]).activate
     redirect_to admin_products_path
   end
 
